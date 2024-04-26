@@ -28,22 +28,6 @@ const milestones = [
     {
         goal: 50,
         desc: "burn the garden"
-    },
-    {
-        goal: 50,
-        desc: "burn the garden"
-    },
-    {
-        goal: 50,
-        desc: "burn the garden"
-    },
-    {
-        goal: 50,
-        desc: "burn the garden"
-    },
-    {
-        goal: 50,
-        desc: "burn the garden"
     }
 ]
 

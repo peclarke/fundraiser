@@ -1,27 +1,70 @@
 import './Admin.css';
+import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import { useStoreState, useStoreActions } from '../hooks';
 import { Button, Chip, List, ListItem, ListItemText, ListSubheader, Paper, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Milestone } from '../state';
+import { WS_URL } from '../consts';
+import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
+import EventListener from '../eventlistener';
+
+type ComponentProps = {
+    send: SendJsonMessage;
+}
 
 const Admin = () => {
     const donations = useStoreState((state) => state.donations)
+    
+    const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
+        onOpen: () => {
+          console.log('WebSocket connection established.');
+        },
+        share: true,
+        filter: () => false,
+        retryOnError: true,
+        shouldReconnect: () => true
+    });
+
+    const [adminPriv, setAdminPriv] = useState<boolean>(false);
+    const connectToServer = () => {
+        console.log("Attempting to establish admin permissions");
+        sendJsonMessage({type: "admin", content: ""});
+        setAdminPriv(true);
+    }
+
+    const [ready, setReady] = useState<boolean>(false);
+    useEffect(() => setReady(readyState === ReadyState.OPEN), [readyState]);
 
     return (
         <>
-        <div className="donations row">
-            <div className="bignumber">
-                <span>${donations}</span>
+            {ready ? 
+            <><div className="donations row">
+                <div className="bignumber">
+                    <span>${donations}</span>
+                </div>
+                {adminPriv ? <MilestoneControls send={sendJsonMessage}/> : null}
             </div>
-            <MilestoneControls />
-        </div>
-        <AddControls />
+            <EventListener />
+            {adminPriv ? <AddControls send={sendJsonMessage}/> : null}
+            {!adminPriv ? <button onClick={connectToServer}>Connect</button> : null}</> :
+
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "column",
+            }}>
+                <h2>Server is not online</h2>
+                <p>Please check you have the correct services running</p>
+            </div>
+            
+            }
         </>
     )
 }
 
-const MilestoneControls = () => {
+const MilestoneControls = ({send}: ComponentProps) => {
     const milestones = useStoreState((state) => state.milestones);
     const donations = useStoreState((state) => state.donations);
     return (
@@ -34,7 +77,7 @@ const MilestoneControls = () => {
                     milestones.map((ms: Milestone) => {
                         const achieved = donations >= ms.goal ? 'lightgreen' : 'none';
                         return (
-                            <ListItem style={{backgroundColor: achieved, paddingLeft: "5vw", paddingRight: "5vw"}}>
+                            <ListItem key={ms.goal+"-milestone"} style={{backgroundColor: achieved, paddingLeft: "5vw", paddingRight: "5vw"}}>
                                 <ListItemText
                                     primary={ms.desc}
                                     secondary={"$"+ms.goal+" goal"}
@@ -49,15 +92,19 @@ const MilestoneControls = () => {
     )
 }
 
-const AddControls = () => {
+const AddControls = ({send}: ComponentProps) => {
     const [amt, setAmt] = useState<number>(0);
     const [amt2, setAmt2] = useState<number>(0);
 
     const addDonation = useStoreActions((action) => action.addDonation)
     const setDonation = useStoreActions((action) => action.setDonation);
+    const milestones = useStoreState((state) => state.milestones);
     const submitDonation = () => {
         addDonation(amt)
         setAmt(0);
+        // update server with good news
+        send({type: "update", content: {donations: amt, milestones}})
+
     }
 
     const handleClick = (newDonation: number) => setAmt(amt+newDonation)
