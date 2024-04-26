@@ -3,30 +3,33 @@ import { WS_URL } from "./consts"
 import { useEffect } from "react";
 import { useStoreActions } from "./hooks";
 
-const UpdateInfo = (message: MessageEvent<any>): boolean => {
-    const evt = JSON.parse(message.data);
-    return evt.type === "update";
+export type ServerMessage = {
+    type: string;
+    content: any;
 }
 
-const EventListener = () => {
+const InitMsg = (message: MessageEvent<any>): boolean => {
+    const evt = JSON.parse(message.data);
+    return evt.type === "init";
+}
+
+export const InitListener = () => {
     const setDonations  = useStoreActions((actions) => actions.setDonation);
     const setMilestones = useStoreActions((actions) => actions.setMilestones);
 
     const { lastJsonMessage } = useWebSocket(WS_URL, {
         share: true,
-        filter: UpdateInfo
+        filter: InitMsg
     })
 
     useEffect(() => {
-        console.log(lastJsonMessage)
         if (lastJsonMessage) {
-            console.log(lastJsonMessage);
-            // const { p1, p2 } = lastJsonMessage.content;
-            // setNames([p1, p2]);
+            const { donations, milestones } = (lastJsonMessage as ServerMessage).content;
+            setDonations(donations);
+            setMilestones(milestones);
+            console.log("Successfully updated data")
         }
     }, [lastJsonMessage]);
 
     return (<></>);
 }
-
-export default EventListener;

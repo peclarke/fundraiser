@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { Milestone } from '../state';
 import { WS_URL } from '../consts';
 import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
-import EventListener from '../eventlistener';
+import { InitListener } from '../eventlistener';
 
 type ComponentProps = {
     send: SendJsonMessage;
@@ -43,9 +43,9 @@ const Admin = () => {
                 <div className="bignumber">
                     <span>${donations}</span>
                 </div>
-                {adminPriv ? <MilestoneControls send={sendJsonMessage}/> : null}
+                {adminPriv ? <MilestoneControls /> : null}
             </div>
-            <EventListener />
+            <InitListener />
             {adminPriv ? <AddControls send={sendJsonMessage}/> : null}
             {!adminPriv ? <button onClick={connectToServer}>Connect</button> : null}</> :
 
@@ -64,7 +64,7 @@ const Admin = () => {
     )
 }
 
-const MilestoneControls = ({send}: ComponentProps) => {
+export const MilestoneControls = () => {
     const milestones = useStoreState((state) => state.milestones);
     const donations = useStoreState((state) => state.donations);
     return (
@@ -96,15 +96,23 @@ const AddControls = ({send}: ComponentProps) => {
     const [amt, setAmt] = useState<number>(0);
     const [amt2, setAmt2] = useState<number>(0);
 
+    const donations = useStoreState((state) => state.donations);
     const addDonation = useStoreActions((action) => action.addDonation)
     const setDonation = useStoreActions((action) => action.setDonation);
     const milestones = useStoreState((state) => state.milestones);
+
     const submitDonation = () => {
         addDonation(amt)
-        setAmt(0);
         // update server with good news
-        send({type: "update", content: {donations: amt, milestones}})
+        console.log({donations: donations, milestones})
+        send({type: "update", content: {donations: donations+amt, milestones}});
+        setAmt(0);
 
+    }
+
+    const handleSet = () => {
+        send({type: "update", content: {donations: amt2, milestones}});
+        setDonation(amt2);
     }
 
     const handleClick = (newDonation: number) => setAmt(amt+newDonation)
@@ -140,7 +148,7 @@ const AddControls = ({send}: ComponentProps) => {
                         />
                         <Button 
                             variant="contained" 
-                            onClick={() => setDonation(amt2)}
+                            onClick={handleSet}
                             color="error"
                         >Replace</Button>
                     </div>
