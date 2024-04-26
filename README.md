@@ -17,7 +17,6 @@ This software uses **Donations** and **Milestones**. Milestones are achieved whe
 Staff members can manage the system through the `/admin` endpoint. All other endpoints - including the root, `/` - will route to the display screen.
 
 ### TODO
-- Make the display screen prettier
 - Add some user/pass auth on admin portal
 - Add milestone management
 - Docker-compose the entire application

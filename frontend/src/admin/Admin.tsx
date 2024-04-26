@@ -47,7 +47,7 @@ const Admin = () => {
             </div>
             <InitListener />
             {adminPriv ? <AddControls send={sendJsonMessage}/> : null}
-            {!adminPriv ? <button onClick={connectToServer}>Connect</button> : null}</> :
+            {!adminPriv ? <button style={{fontSize: "40px"}} onClick={connectToServer}>Connect to server</button> : null}</> :
 
             <div style={{
                 display: "flex",
