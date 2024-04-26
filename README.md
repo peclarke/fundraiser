@@ -2,6 +2,9 @@
 
 Software that can be used by staff members at fundraisers to update donations in real time to those at an event. This was initially created in preparation for a fundraiser I'm going to be co-hosting. 
 
+<img width="1452" alt="Screen Shot 2024-04-26 at 11 18 47 pm" src="https://github.com/peclarke/fundraiser/assets/30831649/616ee526-cef0-4db9-8b30-2bcbc99dd214">
+<img width="1050" alt="Screen Shot 2024-04-26 at 11 18 34 pm" src="https://github.com/peclarke/fundraiser/assets/30831649/b6931bb8-3064-4eed-afe5-2500bd93a8e9">
+
 ## Features
 - Admin Portal for donation entries and milestone management
 - Display screen to either link people to or display on a large screen
