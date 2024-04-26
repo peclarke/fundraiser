@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    font-family: Roboto, sans-serif;  
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+}
+
+.donations {
+    background-color: green;
+    height: 50vh;
+    align-items: end;
+}
+
+.controls {
+    padding-top: 2vw;
+}
+
+.paper-controls>span {
+    display:inline;
+    padding-bottom: 1vh;
+}
+
+.paper-controls {
+    padding: 3vw;
+    padding-top: 1vh;
+    padding-bottom: 2vh;
+    display: flex;
+    justify-content:flex-start;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+}
+
+.chips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.all-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+}
