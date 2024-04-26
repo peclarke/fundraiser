@@ -1,5 +1,10 @@
-# React + TypeScript + Vite
+# Fundraiser Frontend
 
+You can run this project with `npm run dev`. 
+
+
+
+-------
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
