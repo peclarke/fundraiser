@@ -2,20 +2,20 @@ import WebSocket from 'ws';
 import {v4 as uuidv4} from 'uuid';
 import { EventEval, EventType } from './types';
 
-// SERVER STORE, lol...
+// SERVER STORE
 let donations = 0;
 let milestones: any[] = [
     {
         goal: 20,
-        desc: "Something something"
+        desc: "Something sweet!"
     },
     {
         goal: 30,
-        desc: "WHAT"
+        desc: "A second prize unveils itself"
     },
     {
         goal: 50,
-        desc: "burn the garden"
+        desc: "You win a house"
     }
 ];
 

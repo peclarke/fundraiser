@@ -1,5 +1,6 @@
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import './Display.css';
+import './Neon.css'
 import { WS_URL } from '../consts';
 import { useEffect, useState } from 'react';
 import { InitListener, ServerMessage } from '../eventlistener';
@@ -33,12 +34,20 @@ const Display = () => {
                 <>
                     <UpdateListener />
                     <InitListener />
-                    <div className="donations row">
-                        <div className="bignumber">
-                            <span>${donations}</span>
+                    <div className="entireDisplay">
+                        <div className="title hero-block">
+                            <h1 className="hero-title">
+                                <span className="hero-title-text">Fish Slap Fundraiser</span>
+                            </h1>
                         </div>
-                        <MilestoneControls/>
-                    </div> 
+                        <div className="full">
+                            <div className="display-bignumber">
+                                <span id="donationAmt">${donations}</span>
+                                <span> raised</span>
+                            </div>
+                            <MilestoneControls/>
+                        </div> 
+                    </div>
                 </>
             :   <h3>Connecting...</h3>}
         </>
