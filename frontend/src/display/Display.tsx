@@ -20,6 +20,10 @@ const Display = () => {
     const [ready, setReady] = useState<boolean>(false);
     useEffect(() => setReady(readyState === ReadyState.OPEN), [readyState]);
 
+    useEffect(() => {
+        sendJsonMessage({type: 'reload', content: ""})
+    }, [])
+
     const donations  = useStoreState((state) => state.donations);
 
     return (
@@ -36,7 +40,7 @@ const Display = () => {
                         <MilestoneControls/>
                     </div> 
                 </>
-            :   null}
+            :   <h3>Connecting...</h3>}
         </>
     )
 }

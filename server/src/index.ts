@@ -2,7 +2,8 @@ import WebSocket from 'ws';
 import {v4 as uuidv4} from 'uuid';
 import { EventEval, EventType } from './types';
 
-let donations = 100;
+// SERVER STORE, lol...
+let donations = 0;
 let milestones: any[] = [
     {
         goal: 20,
@@ -18,6 +19,8 @@ let milestones: any[] = [
     }
 ];
 
+
+// Connection store
 let adminClientId: string | null = null;
 let userClients: Record<string, WebSocket> = {};
 
@@ -60,6 +63,15 @@ const handleMessage = (message: string, id: string) => {
             wss.clients.forEach(client => {
                 client.send(JSON.stringify(data))
             })
+            break;
+        case EventType.RELOAD:
+            userClients[id].send(JSON.stringify({
+                type: "reload",
+                content: {
+                    donations: donations,
+                    milestones: milestones
+                }
+            }))
             break;
         default:
             console.error("Error: unknown event type " + data);

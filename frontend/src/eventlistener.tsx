@@ -10,7 +10,7 @@ export type ServerMessage = {
 
 const InitMsg = (message: MessageEvent<any>): boolean => {
     const evt = JSON.parse(message.data);
-    return evt.type === "init";
+    return evt.type === "reload" || evt.type === "init";
 }
 
 export const InitListener = () => {
