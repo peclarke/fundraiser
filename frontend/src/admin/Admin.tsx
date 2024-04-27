@@ -2,12 +2,14 @@ import './Admin.css';
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import { useStoreState, useStoreActions } from '../hooks';
-import { Button, Chip, List, ListItem, ListItemText, ListSubheader, Paper, TextField } from '@mui/material';
+import { Button, Chip, Fab, List, ListItem, ListItemText, ListSubheader, Paper, TextField } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useEffect, useState } from 'react';
 import { Milestone } from '../state';
 import { WS_URL } from '../consts';
 import { SendJsonMessage } from 'react-use-websocket/dist/lib/types';
 import { InitListener } from '../eventlistener';
+import Settings from './settings/Settings';
 
 type ComponentProps = {
     send: SendJsonMessage;
@@ -36,17 +38,24 @@ const Admin = () => {
     const [ready, setReady] = useState<boolean>(false);
     useEffect(() => setReady(readyState === ReadyState.OPEN), [readyState]);
 
+    const [settings, setSettings] = useState<boolean>(false);
+
     return (
         <>
             {ready ? 
-            <><div className="donations row">
+            <>
+            <Settings open={settings} handleClose={() => setSettings(false)}/>
+            {adminPriv && <Fab color="primary" aria-label="add" id="settings-fab" onClick={() => setSettings(true)}>
+                <SettingsIcon />
+            </Fab>}
+            <div className="donations row">
                 <div className="bignumber">
                     <span>${donations.toString().substring(0,5)}</span>
                 </div>
                 {adminPriv ? <MilestoneControls /> : null}
             </div>
             <InitListener />
-            {adminPriv ? <AddControls send={sendJsonMessage}/> : null}
+            {adminPriv && <AddControls send={sendJsonMessage}/>}
             {!adminPriv ? <button style={{fontSize: "40px"}} onClick={connectToServer}>Connect to server</button> : null}</> :
 
             <div style={{
@@ -123,6 +132,7 @@ const AddControls = ({send}: ComponentProps) => {
     }
 
     return (
+        <>
             <div className="controls row">
                 <Paper elevation={3} className="paper-controls">
                     <span>Donation Amounts</span>
@@ -159,6 +169,7 @@ const AddControls = ({send}: ComponentProps) => {
                     </div>
                 </Paper>
             </div>
+        </>
     )
 }
 
