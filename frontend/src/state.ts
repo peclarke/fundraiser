@@ -1,6 +1,7 @@
 import { Action, action, createStore } from "easy-peasy";
 
 export type Milestone = {
+    id?: number;
     goal: number;
     desc: string;
 }

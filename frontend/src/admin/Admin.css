@@ -102,8 +102,17 @@ body {
 .paper-settings>div:first-child {
     width: 30%;
     background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 2vh;
 }
 
+/* .paper-settings>div:first-child {
+    background-color: red;
+    height: 100vh;
+} */
+
 .paper-settings>div:last-child {
-    width: 50%;
+    width: 70%;
 }

@@ -1,4 +1,4 @@
-import { Modal, Paper, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Modal, Paper, List, ListItemButton, ListItemIcon, ListItemText, Button } from "@mui/material";
 import FlagIcon from '@mui/icons-material/Flag';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import InfoIcon from '@mui/icons-material/Info';
@@ -14,7 +14,7 @@ interface SettingsProps {
 }
 
 const Settings = ({open, handleClose}: SettingsProps) => {
-    const [selectedIndex, setSelectedIndex] = useState(1);
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const handleListItemClick = (
       _event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -33,7 +33,7 @@ const Settings = ({open, handleClose}: SettingsProps) => {
         aria-describedby="modal-modal-description"
         >
             <Paper className="paper-settings" elevation={3}>
-                <div>
+                <div className="left-col">
                     <List component="nav" aria-label="main mailbox folders">
                         <ListItemButton
                             selected={selectedIndex === 0}
@@ -63,6 +63,14 @@ const Settings = ({open, handleClose}: SettingsProps) => {
                             <ListItemText primary="About"/>
                         </ListItemButton>
                     </List>
+                    <Button 
+                        variant="contained" 
+                        className="close-button"
+                        style={{margin: "1vw"}}
+                        onClick={handleClose}
+                    >
+                            CLOSE
+                    </Button>
                 </div>
                 <div>
                     {
