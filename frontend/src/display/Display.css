@@ -46,8 +46,8 @@ body {
     display: flex;
     height: 60vh;
     justify-content: space-between;
-    padding-left: 20vw;
-    padding-right: 20vw;
+    padding-left: 15vw;
+    padding-right: 15vw;
     align-items: flex-start;
     margin-top: -15vh;
 }

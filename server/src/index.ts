@@ -3,7 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import { EventEval, EventType } from './types';
 
 // SERVER STORE
-let donations = 0;
+let donations = 0.00;
 let milestones: any[] = [
     {
         goal: 20,

@@ -41,7 +41,7 @@ const Admin = () => {
             {ready ? 
             <><div className="donations row">
                 <div className="bignumber">
-                    <span>${donations}</span>
+                    <span>${donations.toString().substring(0,5)}</span>
                 </div>
                 {adminPriv ? <MilestoneControls /> : null}
             </div>
@@ -93,7 +93,7 @@ export const MilestoneControls = () => {
 }
 
 const AddControls = ({send}: ComponentProps) => {
-    const [amt, setAmt] = useState<number>(0);
+    const [amt, setAmt] = useState<string>("");
     const [amt2, setAmt2] = useState<number>(0);
 
     const donations = useStoreState((state) => state.donations);
@@ -102,20 +102,20 @@ const AddControls = ({send}: ComponentProps) => {
     const milestones = useStoreState((state) => state.milestones);
 
     const submitDonation = () => {
-        addDonation(amt)
+        addDonation(round(parseFloat(amt), 2))
         // update server with good news
-        console.log({donations: donations, milestones})
-        send({type: "update", content: {donations: donations+amt, milestones}});
-        setAmt(0);
+        // console.log({donations: donations, milestones})
+        send({type: "update", content: {donations: round(donations+parseFloat(amt), 2), milestones}});
+        setAmt("");
 
     }
 
     const handleSet = () => {
-        send({type: "update", content: {donations: amt2, milestones}});
+        send({type: "update", content: {donations: round(amt2, 2), milestones}});
         setDonation(amt2);
     }
 
-    const handleClick = (newDonation: number) => setAmt(amt+newDonation)
+    const handleClick = (newDonation: number) => setAmt((parseFloat(amt)+newDonation).toString())
 
     return (
             <div className="controls row">
@@ -127,7 +127,9 @@ const AddControls = ({send}: ComponentProps) => {
                             label="Add Donation Amount" 
                             variant="outlined" 
                             type="number"
-                            onChange={(e) => setAmt(parseInt(e.target.value))}
+                            // InputProps={{ inputProps: { min: 36, max: 40 } }}
+                            // step="any"
+                            onChange={(e: object) => setAmt(e.target.value)}
                         />
                         <Button variant="contained" onClick={submitDonation}>Confirm Add</Button>
                     </div>
@@ -144,7 +146,7 @@ const AddControls = ({send}: ComponentProps) => {
                             label="Manual Setting" 
                             variant="outlined" 
                             type="number"
-                            onChange={(e) => setAmt2(parseInt(e.target.value))}
+                            onChange={(e) => setAmt2(parseFloat(e.target.value))}
                         />
                         <Button 
                             variant="contained" 
@@ -156,5 +158,11 @@ const AddControls = ({send}: ComponentProps) => {
             </div>
     )
 }
+
+export const round = (num: number, precision: number) => { 
+    
+    const multiplier = Math.pow(10, 2 || 0);
+    return (Math.round(num * multiplier) / multiplier);
+};
 
 export default Admin
