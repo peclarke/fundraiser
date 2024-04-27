@@ -1,7 +1,10 @@
 import useWebSocket from "react-use-websocket";
 import { useStoreActions, useStoreState } from "../../hooks";
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { WS_URL } from "../../consts";
+import { Fab } from "@mui/material";
 
 const columns: GridColDef[] = [
     {
@@ -30,12 +33,26 @@ const columns: GridColDef[] = [
       editable: true,
       align: 'left',
       headerAlign: 'left',
+    },
+    {
+        field: 'delete',
+        headerName: '',
+        width: 40,
+        editable: false,
+        renderCell: (params) => { 
+            return (
+                <DeleteIcon 
+                    className="icon-delete"
+                    onClick={() => console.log(params)}
+                />
+            )
+        }
     }
   ];
 
 const Milestones = () => {
     const donations = useStoreState((state) => state.donations);
-    const milestones = [...useStoreState((state) => state.milestones)];
+    const milestones = useStoreState((state) => state.milestones);
     milestones.forEach((milestone: any, index) => {
         milestone["id"] = index;
         return milestone; 
@@ -70,9 +87,19 @@ const Milestones = () => {
         }})
     }
 
+    const add = () => {
+        const newRow = { goal: -1, desc: "", id: milestones.length }
+        update([...milestones, newRow])
+    }
+
     return (
         <div className="tab">
-            <h2>Donation Milestones</h2>
+            <div className="milestone-title">
+                <h2>Donation Milestones</h2>
+                <Fab color="primary" aria-label="add" id="milestone-add" size={"small"} onClick={add}>
+                    <AddIcon />
+                </Fab>
+            </div>
             <DataGrid 
                 rows={milestones} 
                 columns={columns} 

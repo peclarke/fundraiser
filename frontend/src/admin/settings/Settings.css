@@ -2,3 +2,22 @@
     padding: 2vw;
     padding-top: 0;
 }
+
+.milestone-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#milestone-add {
+}
+
+/* #milestone-add {
+    position:inherit;
+    right: 10px;
+    top: 10px;
+} */
+
+.icon-delete {
+    cursor: pointer;
+}
