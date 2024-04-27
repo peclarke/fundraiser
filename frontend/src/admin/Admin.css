@@ -18,8 +18,14 @@ body {
     height: 50vh;
 }
 
+.controls-milestone {
+    padding-top: 2vw;
+}
+
 .controls {
     padding-top: 2vw;
+    background-color: white;
+    height: 50vh;
 }
 
 .paper-controls>span {
@@ -36,7 +42,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 1vw;
-    height: 100%;
+    height: 90%;
 }
 
 .chips {

@@ -68,7 +68,7 @@ export const MilestoneControls = () => {
     const milestones = useStoreState((state) => state.milestones);
     const donations = useStoreState((state) => state.donations);
     return (
-        <div className="controls row">
+        <div className="controls-milestone row">
             <Paper elevation={3} className="milestones">
                 {/* <span>Donation Milestones</span> */}
                 <ListSubheader>Donation Milestones</ListSubheader>
@@ -77,7 +77,7 @@ export const MilestoneControls = () => {
                     milestones.map((ms: Milestone) => {
                         const achieved = donations >= ms.goal ? 'lightgreen' : 'none';
                         return (
-                            <ListItem key={ms.goal+"-milestone"} style={{backgroundColor: achieved, paddingLeft: "5vw", paddingRight: "5vw"}}>
+                            <ListItem key={ms.goal+"-milestone"} style={{backgroundColor: achieved, paddingLeft: "5vw", paddingRight: "10vw"}}>
                                 <ListItemText
                                     primary={ms.desc}
                                     secondary={"$"+ms.goal+" goal"}
@@ -93,7 +93,7 @@ export const MilestoneControls = () => {
 }
 
 const AddControls = ({send}: ComponentProps) => {
-    const [amt, setAmt] = useState<string>("");
+    const [amt, setAmt] = useState<number>(0);
     const [amt2, setAmt2] = useState<number>(0);
 
     const donations = useStoreState((state) => state.donations);
@@ -102,11 +102,11 @@ const AddControls = ({send}: ComponentProps) => {
     const milestones = useStoreState((state) => state.milestones);
 
     const submitDonation = () => {
-        addDonation(round(parseFloat(amt), 2))
+        addDonation(round(amt, 2))
         // update server with good news
         // console.log({donations: donations, milestones})
-        send({type: "update", content: {donations: round(donations+parseFloat(amt), 2), milestones}});
-        setAmt("");
+        send({type: "update", content: {donations: round(donations+amt, 2), milestones}});
+        setAmt(0);
 
     }
 
@@ -115,7 +115,12 @@ const AddControls = ({send}: ComponentProps) => {
         setDonation(amt2);
     }
 
-    const handleClick = (newDonation: number) => setAmt((parseFloat(amt)+newDonation).toString())
+    const handleClick = (newDonation: number) => {
+        // setAmt("hello");
+        console.log(amt2);
+
+        setAmt((amt)+newDonation)
+    }
 
     return (
             <div className="controls row">
@@ -123,21 +128,19 @@ const AddControls = ({send}: ComponentProps) => {
                     <span>Donation Amounts</span>
                     <div className="inputs">
                         <TextField id="outlined-basic"
-                            value={amt} 
+                            value={amt}
                             label="Add Donation Amount" 
                             variant="outlined" 
                             type="number"
-                            // InputProps={{ inputProps: { min: 36, max: 40 } }}
-                            // step="any"
-                            onChange={(e: object) => setAmt(e.target.value)}
+                            onChange={(e) => setAmt(parseFloat(e.target.value))}
                         />
                         <Button variant="contained" onClick={submitDonation}>Confirm Add</Button>
                     </div>
                     <div className="chips">
+                        <Chip label="Add $0.5" variant="outlined" onClick={() => handleClick(0.5)} />
                         <Chip label="Add $1" variant="outlined" onClick={() => handleClick(1)} />
                         <Chip label="Add $3" variant="outlined" onClick={() => handleClick(3)} />
                         <Chip label="Add $5" variant="outlined" onClick={() => handleClick(5)} />
-                        <Chip label="Add $10" variant="outlined" onClick={() => handleClick(10)} />
                     </div>
                     
                     <div style={{paddingTop: "4vh", display: 'flex', gap: '10px', borderTop: '1px solid silver'}}>
