@@ -6,50 +6,6 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { WS_URL } from "../../consts";
 import { Fab } from "@mui/material";
 
-const columns: GridColDef[] = [
-    {
-        field: 'id',
-        headerName: 'id',
-        type: 'number',
-        editable: false,
-        align: 'left',
-        headerAlign: 'left',
-        width: 5
-    },
-    { 
-      field: 'goal',
-      headerName: 'Goal', 
-      type: "number", 
-      width: 100, 
-      editable: true,
-      align: 'left',
-      headerAlign: 'left',
-    },
-    {
-      field: 'desc',
-      headerName: 'Description',
-      type: 'string',
-      width: 270,
-      editable: true,
-      align: 'left',
-      headerAlign: 'left',
-    },
-    {
-        field: 'delete',
-        headerName: '',
-        width: 40,
-        editable: false,
-        renderCell: (params) => { 
-            return (
-                <DeleteIcon 
-                    className="icon-delete"
-                    onClick={() => console.log(params)}
-                />
-            )
-        }
-    }
-  ];
-
 const Milestones = () => {
     const donations = useStoreState((state) => state.donations);
     const milestones = useStoreState((state) => state.milestones);
@@ -57,6 +13,50 @@ const Milestones = () => {
         milestone["id"] = index;
         return milestone; 
     })
+
+    const columns: GridColDef[] = [
+        {
+            field: 'id',
+            headerName: 'id',
+            type: 'number',
+            editable: false,
+            align: 'left',
+            headerAlign: 'left',
+            width: 5
+        },
+        { 
+          field: 'goal',
+          headerName: 'Goal', 
+          type: "number", 
+          width: 100, 
+          editable: true,
+          align: 'left',
+          headerAlign: 'left',
+        },
+        {
+          field: 'desc',
+          headerName: 'Description',
+          type: 'string',
+          width: 270,
+          editable: true,
+          align: 'left',
+          headerAlign: 'left',
+        },
+        {
+            field: 'delete',
+            headerName: '',
+            width: 40,
+            editable: false,
+            renderCell: (params) => { 
+                return (
+                    <DeleteIcon 
+                        className="icon-delete"
+                        onClick={() => deleteRow(params.row.id)}
+                    />
+                )
+            }
+        }
+      ];
 
     const { sendJsonMessage } = useWebSocket(WS_URL, {
         onOpen: () => {
@@ -90,6 +90,18 @@ const Milestones = () => {
     const add = () => {
         const newRow = { goal: -1, desc: "", id: milestones.length }
         update([...milestones, newRow])
+    }
+
+    const deleteRow = (rowId: number) => {
+        const newMilestones = milestones.filter(milestone => milestone.id !== rowId);
+        newMilestones.forEach((milestone, _index) => {
+            delete milestone['id'];
+        })
+        update(newMilestones);
+        sendJsonMessage({type: 'update', content: {
+            donations: donations,
+            milestones: newMilestones
+        }})
     }
 
     return (
