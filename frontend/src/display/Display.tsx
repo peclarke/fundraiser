@@ -37,7 +37,10 @@ const Display = () => {
                     <div className="entireDisplay">
                         <div className="title hero-block">
                             <h1 className="hero-title">
-                                <span className="hero-title-text">Fish Slap Fundraiser</span>
+                                <span className="hero-title-text">{
+                                import.meta.env.REACT_FUNDRAISER_NAME === undefined ? "Fish Slap Fundraiser"
+                                    : import.meta.env.REACT_FUNDRAISER_NAME
+                                }</span>
                             </h1>
                         </div>
                         <div className="full">

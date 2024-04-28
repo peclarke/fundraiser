@@ -4,6 +4,9 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        REACT_FUNDRAISER_NAME: "FISH SLAP FUNDRAISER"
+        REACT_PASS_PHRASE: "Fish-Front-Pass"
     ports:
       - '3000:3000'
   server:

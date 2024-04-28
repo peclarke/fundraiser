@@ -8,6 +8,12 @@ COPY package.json package-lock.json ./
 
 RUN npm install --silent
 
+ARG REACT_FUNDRAISER_NAME
+ARG REACT_PASS_PHRASE
+
+ENV REACT_FUNDRAISER_NAME $REACT_FUNDRAISER_NAME
+ENV REACT_PASS_PHRASE $REACT_PASS_PHRASE
+
 COPY . ./
 
 CMD ["npm", "run", "dev"]
