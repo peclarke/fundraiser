@@ -108,7 +108,14 @@ const Milestones = () => {
         <div className="tab">
             <div className="milestone-title">
                 <h2>Donation Milestones</h2>
-                <Fab color="primary" aria-label="add" id="milestone-add" size={"small"} onClick={add}>
+                <Fab 
+                    color="primary" 
+                    aria-label="add" 
+                    id="milestone-add" 
+                    size={"small"} 
+                    onClick={add}
+                    disabled={milestones.some(milestone => milestone.goal === -1)}
+                >
                     <AddIcon />
                 </Fab>
             </div>

@@ -49,7 +49,7 @@ const Display = () => {
                         </div> 
                     </div>
                 </>
-            :   <h3>Connecting...</h3>}
+            :   <h3 style={{color: "white"}}>Connecting...</h3>}
         </>
     )
 }
