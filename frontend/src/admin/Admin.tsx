@@ -52,7 +52,7 @@ const Admin = () => {
                 <div className="bignumber">
                     <span>${donations.toString().substring(0,5)}</span>
                 </div>
-                {adminPriv ? <MilestoneControls /> : null}
+                {adminPriv ? <MilestoneControls source={"admin"}/> : null}
             </div>
             <InitListener />
             {adminPriv && <AddControls send={sendJsonMessage}/>}
@@ -73,13 +73,12 @@ const Admin = () => {
     )
 }
 
-export const MilestoneControls = () => {
+export const MilestoneControls = ({source}: {source: "disp" | "admin"}) => {
     const milestones = useStoreState((state) => state.milestones);
     const donations = useStoreState((state) => state.donations);
     return (
         <div className="controls-milestone row">
-            <Paper elevation={3} className="milestones">
-                {/* <span>Donation Milestones</span> */}
+            <Paper elevation={3} className={"milestones "+source+"-ms"}>
                 <ListSubheader>Donation Milestones</ListSubheader>
                 <List>
                 {
@@ -173,7 +172,7 @@ const AddControls = ({send}: ComponentProps) => {
     )
 }
 
-export const round = (num: number, precision: number) => { 
+export const round = (num: number, _precision: number) => { 
     
     const multiplier = Math.pow(10, 2 || 0);
     return (Math.round(num * multiplier) / multiplier);

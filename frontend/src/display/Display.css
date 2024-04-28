@@ -2,32 +2,15 @@ body {
     margin: 0;
 }
 
-.title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* background-color: red; */
-    height: 60vh;
-}
-
-.title>span {
-    font-size: 50px;
-}
-
-.entireDisplay {
-    background-color: rgb(40, 40, 40);
-}
-
-.entireDisplay>span {
+/* .entireDisplay>span {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding-top: 50px; */
     font-size: 50px;
-}
+} */
 
 #donationAmt {
     background: linear-gradient(to right, #c0392b, #8e44ad);
@@ -42,12 +25,23 @@ body {
     font-size: 50px;
 }
 
+.entireDisplay {
+    background-color: rgb(40, 40, 40);
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    /* height: 100vh; */
+}
+
 .full {
     display: flex;
-    height: 60vh;
     justify-content: space-between;
     padding-left: 10vw;
     padding-right: 10vw;
-    align-items: flex-start;
-    margin-top: -15vh;
+    align-items: center;
+    height: 80vh;
+}
+
+.title {
+    height: 20vh;
 }

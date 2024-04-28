@@ -36,19 +36,20 @@ const Display = () => {
                     <InitListener />
                     <div className="entireDisplay">
                         <div className="title hero-block">
-                            <h1 className="hero-title">
+                            <span className="hero-title">
                                 <span className="hero-title-text">{
-                                import.meta.env.REACT_FUNDRAISER_NAME === undefined ? "Fish Slap Fundraiser"
-                                    : import.meta.env.REACT_FUNDRAISER_NAME
-                                }</span>
-                            </h1>
+                                    import.meta.env.REACT_FUNDRAISER_NAME === undefined ? "Fish Slap Fundraiser"
+                                        : import.meta.env.REACT_FUNDRAISER_NAME
+                                    }
+                                </span>
+                            </span>
                         </div>
                         <div className="full">
                             <div className="display-bignumber">
                                 <span id="donationAmt">${donations}</span>
                                 <span> raised</span>
                             </div>
-                            <MilestoneControls/>
+                            <MilestoneControls source={"disp"}/>
                         </div> 
                     </div>
                 </>
