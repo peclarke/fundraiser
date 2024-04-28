@@ -1,0 +1,16 @@
+services:
+  frontend:
+    container_name: fundraiser-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+  server:
+    container_name: fundraiser-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+      
