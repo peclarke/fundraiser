@@ -6,16 +6,24 @@ import { EventEval, EventType } from './types';
 let donations = 0.00;
 let milestones: any[] = [
     {
-        goal: 20,
-        desc: "Something sweet!"
+        goal: 100,
+        desc: "Side flip"
     },
     {
-        goal: 30,
-        desc: "A second prize unveils itself"
+        goal: 200,
+        desc: "Chilli"
     },
     {
-        goal: 50,
-        desc: "You win a house"
+        goal: 300,
+        desc: "Logan's Milkshake"
+    },
+    {
+        goal: 400,
+        desc: "Soaked with a bucket of water"
+    },
+    {
+        goal: 500,
+        desc: "COMMITMENT: Learn a backflip"
     }
 ];
 
