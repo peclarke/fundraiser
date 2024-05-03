@@ -8,6 +8,7 @@ Software that can be used by staff members at fundraisers to update donations in
 ## Features
 - Admin Portal for donation entries and milestone management
 - Display screen to either link people to or display on a large screen
+- Milestone management
 
 ## Drawbacks
 - There is no authentication to the admin portal at the moment. While there is no sensitive information being used here - this is simply used as a way to display progress - security wasn't in the initial scope.
@@ -18,7 +19,6 @@ Staff members can manage the system through the `/admin` endpoint. All other end
 
 ### TODO
 - Add some user/pass auth on admin portal
-- Add milestone management
 - Docker-compose the entire application
 
 ### Not planned
